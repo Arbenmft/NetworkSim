@@ -12,7 +12,7 @@ void Network::resize(const size_t& size)
 
 bool Network::add_link(const size_t& _a , const size_t& _b)
  {
-     
+    
     if (_a >= values.size() or _b >= values.size())
     {
         return false;
@@ -81,7 +81,6 @@ size_t Network::set_values(const std::vector<double> &_vect)
 {
 	size_t total(0);
     values.clear();
-    std::vector<double> x = values;
     
     for (size_t i=0;i<_vect.size(); ++i)
     {
