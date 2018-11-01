@@ -1,5 +1,7 @@
+#include <iostream>
 #include "network.h"
 #include "random.h"
+#include <string>
 
 void Network::resize(const size_t& size)
 {
@@ -12,15 +14,15 @@ void Network::resize(const size_t& size)
 
 bool Network::add_link(const size_t& _a , const size_t& _b)
  {
-    
+    try {
     if (_a >= values.size() or _b >= values.size())
     {
-        return false;
+        throw std::string("Value from the first parameter or second one is bigger than the size of the vector");
     }
     
     if (_a == _b)
     {
-        return false;
+        throw std::string("The first paramater is equal to the second one");
     }
     
     auto result = links.equal_range(_a);
@@ -28,7 +30,7 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
     {
         if (it->second == _b)
         {
-            return false;
+            throw std::string("The first parameter is already linked to the second one");
         }
      }
      
@@ -37,14 +39,20 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
      {
          if (it->second == _a)
          {
-             return false;
+             throw std::string("The second paramter is already linked to the first one");
          }
      }
      
     links.insert(std::pair<size_t, size_t>(_a, _b));
     links.insert(std::pair<size_t,size_t>(_b,_a));
-    
     return true;
+    }
+    
+    catch(const std::string &e)
+    {
+        //std::cerr<< e << std::endl;
+        return false;
+    }
      
  }
  
