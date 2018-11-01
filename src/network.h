@@ -17,13 +17,13 @@ public:
     Resizes the list of nodes (\ref values) and also resets all values.
     After this function is called \ref values has size *n* and contains random numbers (normal distribution, mean=0, sd=1).
  */
-    void resize(const size_t &n);
+    void resize(const size_t &size);
 /*! 
   Adds a bidirectional link between two nodes
   @param[in] a,b the indexes if the two nodes 
   @param[out] success the link was succesfully inserted (true if both nodes exist and the link did not exist yet)
  */
-    bool add_link(const size_t&, const size_t&);
+    bool add_link(const size_t& _a, const size_t& _b);
 /*! Creates random connections between nodes: each node *n* will be linked with *degree(n)* other nodes (randomly chosen),
   where *degree(n)* is Poisson-distributed.
 
@@ -31,7 +31,7 @@ public:
   @param[in] mean_deg the average of the Poisson distribution,
   @param[out] number of links created.
  */
-    size_t random_connect(const double&);
+    size_t random_connect(const double& _a);
 /*! Resets node values with a vector of *n* new values.
   If the current size is *s* and *n<s* then only the first *n* values are changed.
   If *n>s* then only *s* values are used. 
@@ -40,7 +40,7 @@ public:
   @param[in] vector of new node values,
   @param[out] number of nodes succesfully reset.
  */
-    size_t set_values(const std::vector<double>&);
+    size_t set_values(const std::vector<double> &_vect);
 /*! Number of nodes */
     size_t size() const;
 /*! Degree (number of links) of node no *n* */
@@ -52,7 +52,7 @@ public:
  */
     std::vector<double> sorted_values() const;
 /*! All neighbors (linked) nodes of node no *n* */
-    std::vector<size_t> neighbors(const size_t&) const;
+    std::vector<size_t> neighbors(const size_t& _n) const;
 
 private:
     std::vector<double> values;

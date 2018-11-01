@@ -3,7 +3,7 @@
 #include "random.h"
 #include <string>
 
-void Network::resize(const size_t& size)
+void Network::resize(const size_t &size)
 {
     values.clear();
     for (size_t i(0); i < size; ++i)
@@ -66,7 +66,25 @@ size_t Network::random_connect(const double& _a)
         x.push_back(i);
     }
     
-    
+    for(size_t t=0; t < x.size(); ++t)
+    {
+        size_t firstValue = x[t];
+        size_t degree(RNG.poisson(_a));
+        size_t sum(0);
+        size_t n(0);
+        
+        while (sum < degree)
+        {
+            if (add_link(firstValue,x[n])==true)
+            {
+                ++sum;
+                RNG.shuffle(x);
+            }
+            ++n;
+        }
+        newLinks += sum;
+    }
+    /*
     for (size_t t=0; t < x.size(); ++t)
     {
         size_t firstValue = x[t];
@@ -81,6 +99,7 @@ size_t Network::random_connect(const double& _a)
            }
         }
     }
+     */
     return newLinks;
 }
 
