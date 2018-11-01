@@ -17,7 +17,7 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
     try {
     if (_a >= values.size() or _b >= values.size())
     {
-        throw std::string("Value from the first parameter or second one is bigger than the size of the vector");
+        throw std::string("Value of the first parameter or second one is bigger than the size of the vector");
     }
     
     if (_a == _b)
