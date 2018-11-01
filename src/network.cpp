@@ -53,7 +53,6 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
         //std::cerr<< e << std::endl;
         return false;
     }
-     
  }
  
 size_t Network::random_connect(const double& _a)
@@ -97,7 +96,6 @@ size_t Network::set_values(const std::vector<double> &_vect)
     }
 	
 	return total;
-	
 }
 
 size_t Network::size() const
@@ -134,5 +132,4 @@ std::vector<size_t> Network::neighbors(const size_t& _n) const
 	}
 	
 	return totalNeighbors;
-		
 }
