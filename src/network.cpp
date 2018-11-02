@@ -15,7 +15,7 @@ void Network::resize(const size_t &size)
 bool Network::add_link(const size_t& _a , const size_t& _b)
  {
     try {
-    if (_a >= values.size() or _b >= values.size())
+    if (_a > values.size()-1 or _b > values.size()-1)
     {
         throw std::string("Value of the first parameter or second one is bigger than the size of the vector");
     }
@@ -66,13 +66,14 @@ size_t Network::random_connect(const double& _a)
     while(x.size()>0)
     {
         RNG.shuffle(x);
-        size_t firstValue = x[x.size()-1];
+        size_t Value = x[x.size()-1];
         size_t degree(RNG.poisson(_a));
         size_t sum(0);
         size_t n(0);
-        while (sum < degree)
+        
+        while (sum < degree and n < x.size()-1)
         {
-            if (add_link(firstValue,x[n])==true)
+            if (add_link(Value,x[n])==true)
             {
                 ++sum;
             }
@@ -81,7 +82,6 @@ size_t Network::random_connect(const double& _a)
         newLinks += sum;
         x.pop_back();
     }
-
     /*
     for (size_t t=0; t < x.size(); ++t)
     {
