@@ -82,22 +82,6 @@ size_t Network::random_connect(const double& _a)
         newLinks += sum;
         x.pop_back();
     }
-    /*
-    for (size_t t=0; t < x.size(); ++t)
-    {
-        size_t firstValue = x[t];
-        size_t degree(RNG.poisson(_a));
-        
-        for (size_t n=0; n < degree; ++n)
-        {
-           if(add_link(firstValue,x[n])==true)
-           {
-               ++newLinks;
-               RNG.shuffle(x);
-           }
-        }
-    }
-    */
     return newLinks;
 }
 
