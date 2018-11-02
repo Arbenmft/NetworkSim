@@ -19,12 +19,10 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
     {
         throw std::string("Value of the first parameter or second one is bigger than the size of the vector");
     }
-    
     if (_a == _b)
     {
         throw std::string("The first paramater is equal to the second one");
     }
-    
     auto result = links.equal_range(_a);
     for (auto it = result.first; it != result.second; it++)
     {
@@ -33,7 +31,6 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
             throw std::string("The first parameter is already linked to the second one");
         }
      }
-     
      result = links.equal_range(_b);
      for (auto it = result.first; it != result.second; it++)
      {
@@ -66,24 +63,25 @@ size_t Network::random_connect(const double& _a)
         x.push_back(i);
     }
     
-    for(size_t t=0; t < x.size(); ++t)
+    while(x.size()>0)
     {
-        size_t firstValue = x[t];
+        RNG.shuffle(x);
+        size_t firstValue = x[x.size()-1];
         size_t degree(RNG.poisson(_a));
         size_t sum(0);
         size_t n(0);
-        
         while (sum < degree)
         {
             if (add_link(firstValue,x[n])==true)
             {
                 ++sum;
-                RNG.shuffle(x);
             }
             ++n;
         }
         newLinks += sum;
+        x.pop_back();
     }
+
     /*
     for (size_t t=0; t < x.size(); ++t)
     {
@@ -99,7 +97,7 @@ size_t Network::random_connect(const double& _a)
            }
         }
     }
-     */
+    */
     return newLinks;
 }
 
