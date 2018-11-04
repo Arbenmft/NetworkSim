@@ -13,41 +13,41 @@ void Network::resize(const size_t &size)
 }
 
 bool Network::add_link(const size_t& _a , const size_t& _b)
- {
-    try {
-    if (_a > values.size()-1 or _b > values.size()-1)
+{
+    try
     {
-        throw std::string("Value of the first parameter or second one is bigger than the size of the vector");
-    }
-    if (_a == _b)
-    {
-        throw std::string("The first paramater is equal to the second one");
-    }
-    auto result = links.equal_range(_a);
-    for (auto it = result.first; it != result.second; it++)
-    {
-        if (it->second == _b)
+        if (_a > values.size()-1 or _b > values.size()-1)
         {
-            throw std::string("The first parameter is already linked to the second one");
+            throw std::string("Value of the first parameter or second one is bigger than the size of the vector");
         }
-     }
-     result = links.equal_range(_b);
-     for (auto it = result.first; it != result.second; it++)
-     {
-         if (it->second == _a)
-         {
-             throw std::string("The second paramter is already linked to the first one");
-         }
-     }
-     
-    links.insert(std::pair<size_t, size_t>(_a, _b));
-    links.insert(std::pair<size_t,size_t>(_b,_a));
-    return true;
+        if (_a == _b)
+        {
+            throw std::string("The first paramater is equal to the second one");
+        }
+        auto result = links.equal_range(_a);
+        for (auto it = result.first; it != result.second; it++)
+        {
+            if (it->second == _b)
+            {
+                throw std::string("The first parameter is already linked to the second one");
+            }
+        }
+        result = links.equal_range(_b);
+        for (auto it = result.first; it != result.second; it++)
+        {
+            if (it->second == _a)
+            {
+                throw std::string("The second paramter is already linked to the first one");
+            }
+        }
+        links.insert(std::pair<size_t, size_t>(_a, _b));
+        links.insert(std::pair<size_t,size_t>(_b,_a));
+        return true;
     }
     
     catch(const std::string &e)
     {
-        //std::cerr<< e << std::endl;
+        //std::cerr<< e << std::endl; //Affichage des messages d'erreurs
         return false;
     }
  }
@@ -67,11 +67,11 @@ size_t Network::random_connect(const double& _a)
     {
         RNG.shuffle(x);
         size_t value = x[0];
-        size_t degree(RNG.poisson(_a));
+        size_t nLinks(RNG.poisson(_a));
         size_t sum(0);
         size_t iteration(1);
         
-        while (sum < degree and iteration < x.size()-1)
+        while (sum < nLinks and iteration < x.size()-1)
         {
             if (add_link(value,x[iteration])==true)
             {
@@ -79,7 +79,7 @@ size_t Network::random_connect(const double& _a)
             }
             ++iteration;
         }
-        newLinks += sum;
+            newLinks += sum;
     }
     return newLinks;
 }
@@ -94,7 +94,6 @@ size_t Network::set_values(const std::vector<double> &_vect)
         values.push_back(_vect[i]);
         ++ total;
     }
-	
 	return total;
 }
 
@@ -117,19 +116,17 @@ std::vector<double> Network::sorted_values() const
 {
 	std::vector<double> x = values;
 	std::sort(x.rbegin(), x.rend());
-	
 	return x;
 }
 
 std::vector<size_t> Network::neighbors(const size_t& _n) const
 {
 	std::vector<size_t> totalNeighbors;
-	
 	auto result = links.equal_range(_n);
-	for (auto it = result.first; it != result.second; it++)
+	
+    for (auto it = result.first; it != result.second; it++)
 	{
 		totalNeighbors.push_back(it->second);
 	}
-	
 	return totalNeighbors;
 }
