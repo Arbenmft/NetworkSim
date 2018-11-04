@@ -63,24 +63,23 @@ size_t Network::random_connect(const double& _a)
         x.push_back(i);
     }
     
-    while(x.size()>0)
+    for (size_t n(0); n < x.size(); ++n)
     {
         RNG.shuffle(x);
-        size_t Value = x[x.size()-1];
+        size_t value = x[0];
         size_t degree(RNG.poisson(_a));
         size_t sum(0);
-        size_t n(0);
+        size_t iteration(1);
         
-        while (sum < degree and n < x.size()-1)
+        while (sum < degree and iteration < x.size()-1)
         {
-            if (add_link(Value,x[n])==true)
+            if (add_link(value,x[iteration])==true)
             {
                 ++sum;
             }
-            ++n;
+            ++iteration;
         }
         newLinks += sum;
-        x.pop_back();
     }
     return newLinks;
 }
