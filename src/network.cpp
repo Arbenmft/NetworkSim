@@ -66,10 +66,10 @@ size_t Network::random_connect(const double& _a)
     for (size_t n(0); n < x.size(); ++n)
     {
         RNG.shuffle(x);
-        size_t value = x[0];
-        size_t nLinks(RNG.poisson(_a));
-        size_t sum(0);
-        size_t iteration(1);
+        unsigned int value = x[0];
+        unsigned int nLinks(RNG.poisson(_a));
+        unsigned int sum(0);
+        unsigned int iteration(1);
         
         while (sum < nLinks and iteration < x.size()-1)
         {
@@ -86,18 +86,14 @@ size_t Network::random_connect(const double& _a)
 
 size_t Network::set_values(const std::vector<double> &_vect)
 {
-    if(_vect.size() <= values.size())
+    unsigned int total(0);
+    unsigned int size (std::min(values.size(),_vect.size()));
+    for (size_t i(0); i < size; ++i)
     {
-        for(size_t i(0); i < _vect.size() ; ++i){
-            values[i] = _vect[i];
+        values[i]=_vect[i];
+        ++total;
     }
-        return _vect.size();
-    } else {
-        for(size_t i(0); i < values.size() ; ++i){
-            values[i] = _vect[i];
-        }
-        return values.size();
-    }
+    return total;
 }
 
 size_t Network::size() const
