@@ -79,22 +79,25 @@ size_t Network::random_connect(const double& _a)
             }
             ++iteration;
         }
-            newLinks += sum;
+        newLinks += sum;
     }
     return newLinks;
 }
 
 size_t Network::set_values(const std::vector<double> &_vect)
 {
-	size_t total(0);
-    values.clear();
-    
-    for (size_t i=0;i<_vect.size(); ++i)
+    if(_vect.size() <= values.size())
     {
-        values.push_back(_vect[i]);
-        ++ total;
+        for(size_t i(0); i < _vect.size() ; ++i){
+            values[i] = _vect[i];
     }
-	return total;
+        return _vect.size();
+    } else {
+        for(size_t i(0); i < values.size() ; ++i){
+            values[i] = _vect[i];
+        }
+        return values.size();
+    }
 }
 
 size_t Network::size() const
