@@ -47,7 +47,7 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
     
     catch(const std::string &e)
     {
-        //std::cerr<< e << std::endl; //Affichage des messages d'erreurs
+        //std::cerr<< e << std::endl; //Affichage des messages d'erreur
         return false;
     }
  }
