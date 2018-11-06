@@ -114,7 +114,7 @@ double Network::value(const size_t& _n) const
 std::vector<double> Network::sorted_values() const
 {
 	std::vector<double> x = values;
-	std::sort(x.rbegin(), x.rend());
+	std::sort(x.begin(), x.end(),std::greater<double>());
 	return x;
 }
 
