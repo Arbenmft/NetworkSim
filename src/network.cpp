@@ -55,31 +55,41 @@ bool Network::add_link(const size_t& _a , const size_t& _b)
 size_t Network::random_connect(const double& _a)
 {
     links.clear();
-    std::vector<size_t> x;
-    size_t newLinks(0);
+    unsigned int newLinks(0);
+    std::vector<size_t> index;
     
-    for (size_t i=0; i < values.size(); ++i)
+    for (size_t i(0); i < this->size(); ++i)
     {
-        x.push_back(i);
+        index.push_back(i);
     }
     
-    for (size_t n(0); n < x.size(); ++n)
-    {
-        RNG.shuffle(x);
-        unsigned int value = x[0];
-        unsigned int nLinks(RNG.poisson(_a));
-        unsigned int sum(0);
-        unsigned int iteration(1);
-        
-        while (sum < nLinks and iteration < x.size()-1)
+    try {
+        for (size_t i(0); i< index.size(); ++i)
         {
-            if (add_link(value,x[iteration])==true)
+            size_t degree(RNG.poisson(_a));
+            if(degree > index.size())
             {
-                ++sum;
+                throw std::string("Degree is bigger than the size of the vector");
             }
-            ++iteration;
+            
+            RNG.shuffle(index);
+            size_t iterator(0);
+            
+            for(int n(0); n < degree; ++n)
+            {
+                while(not add_link(i,index[iterator]))
+                {
+                    ++iterator;
+                    continue;
+                }
+                newLinks++;
+            }
         }
-        newLinks += sum;
+    }
+    catch(std::string const& e)
+    {
+        std::cerr << e << std::endl;
+        return 0;
     }
     return newLinks;
 }
