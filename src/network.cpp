@@ -58,7 +58,7 @@ size_t Network::random_connect(const double& _a)
     unsigned int newLinks(0);
     std::vector<size_t> index;
     
-    for (size_t i(0); i < this->size(); ++i)
+    for (size_t i(0); i < values.size(); ++i)
     {
         index.push_back(i);
     }
